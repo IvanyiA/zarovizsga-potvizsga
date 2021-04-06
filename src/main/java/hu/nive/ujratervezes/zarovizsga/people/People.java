@@ -27,5 +27,39 @@ public class People {
         }
         return males.size();
     }
+
+
+    private List<Person> people = new ArrayList<>();
+
+    public int getNumberOfMales2(String path) {
+        readFromFile(path);
+        int counter = 0;
+        for (Person p : people) {
+            if (p.getGender().equals("Male")) {
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    private void readFromFile(String path) {
+        try (BufferedReader bufferedReader = Files.newBufferedReader(Path.of(path))) {
+            String line;
+            bufferedReader.readLine();
+            while ((line = bufferedReader.readLine()) != null) {
+                Person p = processLine(line);
+                people.add(p);
+            }
+        } catch (IOException e) {
+            throw new IllegalStateException("Cannot read file", e);
+        }
+    }
+
+    private Person processLine(String line) {
+        String[] parts = line.split(",");
+        return new Person(Integer.parseInt(parts[0]), parts[1], parts[2], parts[3], parts[4], parts[5]);
+    }
+
+
 }
 
