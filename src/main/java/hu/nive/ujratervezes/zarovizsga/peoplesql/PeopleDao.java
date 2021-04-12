@@ -29,7 +29,6 @@ public class PeopleDao {
     }
 
     private String getIpByName(PreparedStatement statement) throws SQLException {
-        String ipAddress = null;
         try (ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 return resultSet.getString("ip_address");
