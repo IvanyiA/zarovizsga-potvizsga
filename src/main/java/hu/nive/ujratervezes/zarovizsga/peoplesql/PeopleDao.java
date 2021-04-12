@@ -23,7 +23,7 @@ public class PeopleDao {
             return getIpByName(statement);
 
         } catch (SQLException sqle) {
-            throw new IllegalStateException("Cannot read file or error by insert", sqle);
+            throw new IllegalStateException("Cannot read file or error by insert or connect", sqle);
         }
 
     }
@@ -32,10 +32,12 @@ public class PeopleDao {
         String ipAddress = null;
         try (ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
-                ipAddress = resultSet.getString("ip_address");
+                return resultSet.getString("ip_address");
             }
+        } catch (SQLException sqlexeption) {
+            throw new IllegalStateException("Cannot execute");
         }
-        return ipAddress;
+        throw new IllegalArgumentException("Cannot find people with this name.");
     }
 
 }
